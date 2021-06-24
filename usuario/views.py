@@ -20,7 +20,6 @@ def login(request):
 		    	return render(request, 'auth/login.html',{'err':err,'username':username})
 		else:
 			return render(request, 'auth/login.html')
-
 	
 
 def logout_v(request):

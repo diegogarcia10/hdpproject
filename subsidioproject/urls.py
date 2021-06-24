@@ -24,5 +24,6 @@ urlpatterns = [
     path('accounts/login/',login, name="login"),
     path('logout/',logout_v, name='logout'),
     path('registro/',registro,name="registro"),
-    path('agregar/',agregar,name="agregar")
+    path('agregar/',agregar,name="agregar"),
+    path('consulta_municipios/',municipios,name="municipios")
 ]

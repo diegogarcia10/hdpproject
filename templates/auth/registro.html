@@ -54,11 +54,7 @@
                                         value="{{dui}}" />
                                 </div>
                                 <br>
-                                {% if err %}
-                                <div class="alert alert-warning" role="alert">
-                                    {{err}}
-                                </div>
-                                {% endif %}
+
 
                             </div>
                             <div class="col-md-6">
@@ -74,11 +70,11 @@
                                     <p>ID mun {{id_municipio}}</p>
                                     <select class="form-control selectpicker" id="select-country"
                                         data-live-search="true" name="id_municipio" required>
-                                        <option value="" > Seleccione un municipio</option>                                       
+                                        <option value=""> Seleccione un municipio</option>
                                         {% for municipio in municipios %}
                                         <option data-tokens="{{municipio.nombre_municipio}}" value="{{municipio.id}}"
-                                        {% if municipio.id == id_municipio %} selected {% endif %}>
-                                    
+                                            {% if municipio.id == id_municipio %} selected {% endif %}>
+
                                             {{municipio.nombre_municipio}}</option>
 
 
@@ -100,6 +96,11 @@
                     </div>
                 </div>
             </form>
+            {% if err %}
+            <div class="alert alert-warning" role="alert">
+                {{err}}
+            </div>
+            {% endif %}
         </div>
     </div>
 </div>
@@ -118,21 +119,20 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('.selectpicker').selectpicker();
-        if($('#es_empresa').prop("checked") == true){
-                console.log("Checkbox is checked.");
-                $('#nit_display').show();
+        if ($('#es_empresa').prop("checked") == true) {
+            console.log("Checkbox is checked.");
+            $('#nit_display').show();
         }
 
-        $("#es_empresa").click(function(){
-            if($(this).prop("checked") == true){
+        $("#es_empresa").click(function () {
+            if ($(this).prop("checked") == true) {
                 console.log("Checkbox is checked.");
                 $('#nit_display').show();
-            }
-            else if($(this).prop("checked") == false){
+            } else if ($(this).prop("checked") == false) {
                 console.log("Checkbox is unchecked.");
                 $('#nit_display').hide();
             }
-            
+
         });
     });
 </script>

@@ -1,0 +1,94 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block titulo %}
+Dinero otorgado a municipios
+{% endblock %}
+
+{% block css %}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="{% static '/table_Fixed_Header/vendor/bootstrap/css/bootstrap.min.css' %}"
+    rel="stylesheet">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css"
+    href="{% static '/table_Fixed_Header/fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}" rel="stylesheet">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="{% static '/table_Fixed_Header/vendor/animate/animate.css' %}"
+    rel="stylesheet">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="{% static '/table_Fixed_Header/vendor/select2/select2.min.css' %}"
+    rel="stylesheet">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css"
+    href="{% static '/table_Fixed_Header/vendor/perfect-scrollbar/perfect-scrollbar.css' %}" rel="stylesheet">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="{% static '/table_Fixed_Header/css/util.css' %}" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="{% static '/table_Fixed_Header/css/main.css' %}" rel="stylesheet">
+<!--===============================================================================================-->
+{% endblock %}
+
+{% block contenido %}
+<br><br>
+<div class="limiter">
+    <div class="container-table100">
+        <div class="wrap-table100">
+            <div class="table100 ver1 m-b-110">
+                <div class="table100-head">
+                    <table>
+                        <thead>
+                            <tr class="row100 head">
+                                <th class="cell100 column1">Tipo subsidio</th>
+                                <th class="cell100 column2">Cantidad</th>
+                                <th class="cell100 column3">Municipio</th>
+                                <th class="cell100 column4">Departamento</th>
+                                <th class="cell100 column5">Zona</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+
+                <div class="table100-body js-pscroll">
+                    <table>
+                        <tbody>
+                            <tr class="row100 body">
+                                {%if municipios %}
+                                {% for municipio in municipios %}
+                                <td class="cell100 column1">{{ municipio.codigo_subsidio | capfirst }}</td>
+                                <td class="cell100 column2">${{ municipio.cantidad}}</td>
+                                <td class="cell100 column3">{{ municipio.codigo_beneficiario.codigo_municipio}}</td>
+                            </tr>
+                            {% endfor %}
+
+                            {% else %}
+                            <h1>No hay registros de beneficiarios<h1>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="{% static '/table_Fixed_Header/vendor/jquery/jquery-3.2.1.min.js' %}"></script>
+<!--===============================================================================================-->
+<script src="{% static '/table_Fixed_Header/vendor/bootstrap/js/popper.js' %}"></script>
+<script src="{% static '/table_Fixed_Header/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+<!--===============================================================================================-->
+<script src="{% static '/table_Fixed_Header/vendor/select2/select2.min.js' %}"></script>
+<!--===============================================================================================-->
+<script src="{% static '/table_Fixed_Header/vendor/perfect-scrollbar/perfect-scrollbar.min.js' %}"></script>
+<script>
+    $('.js-pscroll').each(function () {
+        var ps = new PerfectScrollbar(this);
+
+        $(window).on('resize', function () {
+            ps.update();
+        })
+    });
+</script>
+<!--===============================================================================================-->
+<script src="{% static '/table_fixed_Header/js/main.js' %}"></script>
+{% endblock %}

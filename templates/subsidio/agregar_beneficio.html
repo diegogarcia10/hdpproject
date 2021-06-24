@@ -5,36 +5,50 @@ Agregar beneficio
 {% endblock %}
 {% block contenido %}
 
-<form>
-  <br><br><br><br>
-  <div class="row">
-    <div class="col-12 col-md-6 offset-md-3">
-      <div class="card">
-        <div classs="card-body">
-          <h2 class="card-title">Nuevo Beneficio</h2>
-          <form>
-            <div class="form-group">
-              <select class="form-control selectpicker" id="select-country" data-live-search="true" name="id_municipio"
-                required>
-                <option value=""> Seleccione un tipo de subsidio</option>
-              </select>
-              <br><br>
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text">$</span>
-                </div>
-                <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+
+<br><br><br><br>
+<div class="row">
+  <div class="col-12 col-md-6 offset-md-3">
+    <div class="card">
+      <div classs="card-body">
+        <h2 class="card-title">Nuevo Beneficio</h2>
+        <form method="POST">
+          {% csrf_token %}
+          <div class="form-group">
+            <p>ID sub {{id_tipoSubsidio}}</p>
+            <select class="form-control selectpicker" id="select-country" data-live-search="true" name="id_tipoSubsidio"
+              required>
+              <option value=""> Seleccione un tipo de subsidio</option>
+              {% for subsidio in subsidios %}
+              <option data-tokens="{{subsidio.nombre_tipo_subsidio}}" value="{{subsidio.id}}"
+                {% if subsidio.id == id_tipoSubsidio %} selected {% endif %}>
+
+                {{subsidio.nombre_tipo_subsidio}}</option>
+              {% endfor %}
+            </select>
+            <br><br>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">$</span>
               </div>
-              <br><br>
-              <div class="d-flex justify-content-end">
-                <input type="submit" value="Guardar" class="btn btn-primary">
-                &nbsp; &nbsp;
-                <input class="btn btn-secondary" type="reset" value="Reset">
-              </div>
-          </form>
-        </div>
+              <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="Cantidad"
+                name="cantidad" value="{{cantidad}}">
+            </div>
+            <br><br>
+            <div class="d-flex justify-content-end">
+              <input type="submit" value="Guardar" class="btn btn-primary">
+              &nbsp; &nbsp;
+              <input class="btn btn-secondary" type="reset" value="Reset">
+            </div>
+          </div>
+          {% if err %}
+          <div class="alert alert-warning" role="alert">
+            {{err}}
+          </div>
+          {% endif %}
+        </form>
       </div>
     </div>
   </div>
-</form>
+</div>
 {% endblock %}
