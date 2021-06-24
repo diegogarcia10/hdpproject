@@ -1,0 +1,31 @@
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+}
+
+.card {
+    border: 0;
+}
+
+.card-title {
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.justify-content-end{
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.form-group{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

@@ -1,0 +1,140 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block titulo %}
+  Sistema de conteo de subsidios
+{% endblock %}
+{% block contenido %}
+<section id="hero" class="hero d-flex align-items-center">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 d-flex flex-column justify-content-center">
+        <h1 data-aos="fade-up">SISTEMA CONTADOR DE SUBSIDIOS - SC19</h1>
+        <h2 data-aos="fade-up" data-aos-delay="400">El Salvador ante el covid-19</h2>
+        <div data-aos="fade-up" data-aos-delay="600">
+          <div class="text-center text-lg-start">
+            <a href="#subsidios"
+              class="btn-get-started scrollto d-inline-flex align-items-center justify-content-center align-self-center">
+              <span>Subsidios</span>
+              <i class="bi bi-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 hero-img" data-aos="zoom-out" data-aos-delay="200">
+        <img src="{% static 'assets/img/logo_sc19.png' %}" class="img-fluid" alt="">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="subsidios" class="subsidios">
+  <div class="container" data-aos="fade-up">
+    <header class="section-header">
+      <h2>SUBSIDIOS</h2>
+      <p>Durante el estado de emergencia provocado por la pandemia 2019 se otorgaron los siguientes subsidios</p>
+    </header>
+    <!-- Subsidios para MIPYMES -->
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="box" data-aos="fade-up" data-aos-delay="200">
+          <img src="/static/assets/img/subsidio-1.png" class="img-fluid" alt="">
+          <h3>Subsidios para empleados de MIPYMES</h3>
+          <p>Subsidios para los empleados de la Micro, Pequeña y Medianas Empresas (MIPYMES)registradas
+            como patronos en el instituto salvadoreño del seguro social (ISSS), que sean afectadas por
+            la crisis del COVID-19.</p>
+        </div>
+      </div>
+
+      <div class="col-lg-4 mt-4 mt-lg-0">
+        <div class="box" data-aos="fade-up" data-aos-delay="400">
+          <img src="/static/assets/img/subsidio-2.png" class="img-fluid" alt="">
+          <h3>Subsidio de 300 dólares</h3>
+          <p>Las personas que recibirán este bono mensualmente son aquellas que pierdan sus trabajos temporales
+            o de manera permanente por la medida de cuarentena domiciliar. Los beneficiarios, de acuerdo con el
+            mandatario salvadoreño, serán aquellas viviendas que consuman menos de 250 kilowatt por hora.</p>
+        </div>
+      </div>
+      <div class="col-lg-4 mt-4 mt-lg-0">
+        <div class="box" data-aos="fade-up" data-aos-delay="600">
+          <img src="/static/assets/img/subsidio-3.png" class="img-fluid" alt="">
+          <h3>Subsidio a pescadores afectados por ETA</h3>
+          <p>Según informes de MAG, se otorgarían un apoyo de $100 a todos los pescadores que cumplieran los requisitos,
+            lo que representa una inversión total de $2.2 millones. El subsidio fue entregado a más de 22 mil pescadores
+            afectados.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="team" class="team">
+  <div class="container" data-aos="fade-up">
+    <header class="section-header">
+      <h2>Equipo de trabajo</h2>
+      <p>Grupo 29</p>
+    </header>
+    <div class="row gy-4 justify-content-md-center">
+      <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
+        <div class="member">
+          <div class="member-info">
+            <h4>Katherine Cárdenas</h4>
+            <span>CH16034</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
+        <div class="member">
+          <div class="member-info">
+            <h4>Luis Mendoza</h4>
+            <span>MG17032</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="300">
+        <div class="member">
+          <div class="member-info">
+            <h4>Benneth Miguel</h4>
+            <span>MC15048</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+{% block footerTop %}
+<div class="footer-top">
+  <div class="container">
+    <div class="row gy-4">
+      <div class="col-lg-5 col-md-12 footer-info">
+        <a href="index.html" class="logo d-flex align-items-center">
+          <img src="{% static 'assets/img/logo.png' %}" alt="">
+          <span>SC19</span>
+        </a>
+        <p>Sistema contador de subsidios covid-19</p>
+      </div>
+
+      <div class="col-lg-2 col-6 footer-links">
+        <h4>Links</h4>
+        <ul>
+          <li><i class="bi bi-chevron-right"></i> <a href="#">Municipios</a></li>
+          <li><i class="bi bi-chevron-right"></i> <a href="#">Departamentos</a></li>
+          <li><i class="bi bi-chevron-right"></i> <a href="#">Zonas</a></li>
+        </ul>
+      </div>
+
+      <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
+        <h4>El Salvador</h4>
+        <p>
+          San Salvador<br>
+          Ciudad Universitaria <br>
+          El Salvador <br><br>
+          <strong>Email:</strong> admin@admin.com<br>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
