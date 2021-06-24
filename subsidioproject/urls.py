@@ -16,11 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from usuario.views import *
+from subsidio.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('subsidio.urls')),
     path('accounts/login/',login, name="login"),
     path('logout/',logout_v, name='logout'),
-    path('registro/',registro,name="registro")
+    path('registro/',registro,name="registro"),
+    path('agregar/',agregar,name="agregar")
 ]

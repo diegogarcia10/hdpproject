@@ -1,0 +1,40 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block titulo %}
+Agregar beneficio
+{% endblock %}
+{% block contenido %}
+
+<form>
+  <br><br><br><br>
+  <div class="row">
+    <div class="col-12 col-md-6 offset-md-3">
+      <div class="card">
+        <div classs="card-body">
+          <h2 class="card-title">Nuevo Beneficio</h2>
+          <form>
+            <div class="form-group">
+              <select class="form-control selectpicker" id="select-country" data-live-search="true" name="id_municipio"
+                required>
+                <option value=""> Seleccione un tipo de subsidio</option>
+              </select>
+              <br><br>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">$</span>
+                </div>
+                <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+              </div>
+              <br><br>
+              <div class="d-flex justify-content-end">
+                <input type="submit" value="Guardar" class="btn btn-primary">
+                &nbsp; &nbsp;
+                <input class="btn btn-secondary" type="reset" value="Reset">
+              </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+{% endblock %}

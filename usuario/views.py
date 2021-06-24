@@ -71,6 +71,7 @@ def registro(request):
 		modelo_usuario.first_name=nombre
 		modelo_usuario.last_name=apellido
 		modelo_usuario.username=username
+		modelo_usuario.email=email
 		modelo_usuario.set_password(password1)
 		modelo_usuario.save()
 
