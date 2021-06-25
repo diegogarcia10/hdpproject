@@ -136,7 +136,7 @@ iframe {
 [ Table ]*/
 
 .limiter {
-  width: 1366px;
+  width: 100%;
   margin: 0 auto;
 }
 

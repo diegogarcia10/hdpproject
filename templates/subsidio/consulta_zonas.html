@@ -1,26 +1,14 @@
 {% extends 'base/base.html' %}
 {% load static %}
 {% block titulo %}
-Dinero otorgado a municipios
+Dinero otorgado a zonas
 {% endblock %}
 
 {% block css %}
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->
-<link rel="stylesheet" type="text/css" href="{% static '/table_Fixed_Header/vendor/bootstrap/css/bootstrap.min.css' %}"
-    rel="stylesheet">
-<!--===============================================================================================-->
 <link rel="stylesheet" type="text/css"
     href="{% static '/table_Fixed_Header/fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}" rel="stylesheet">
-<!--===============================================================================================-->
-<link rel="stylesheet" type="text/css" href="{% static '/table_Fixed_Header/vendor/animate/animate.css' %}"
-    rel="stylesheet">
-<!--===============================================================================================-->
-<link rel="stylesheet" type="text/css" href="{% static '/table_Fixed_Header/vendor/select2/select2.min.css' %}"
-    rel="stylesheet">
-<!--===============================================================================================-->
-<link rel="stylesheet" type="text/css"
-    href="{% static '/table_Fixed_Header/vendor/perfect-scrollbar/perfect-scrollbar.css' %}" rel="stylesheet">
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css" href="{% static '/table_Fixed_Header/css/util.css' %}" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="{% static '/table_Fixed_Header/css/main.css' %}" rel="stylesheet">
@@ -29,7 +17,7 @@ Dinero otorgado a municipios
 
 {% block contenido %}
 <div class="limiter">
-<br><br>
+    <br><br>
     <div class="container-table100">
         <div class="wrap-table100">
             <div class="table100 ver1 m-b-110">
@@ -65,27 +53,4 @@ Dinero otorgado a municipios
             </div>
         </div>
     </div>
-    {% endblock %}
-
-    {% block js %}
-    <script src="{% static '/table_Fixed_Header/vendor/jquery/jquery-3.2.1.min.js' %}"></script>
-    <!--===============================================================================================-->
-    <script src="{% static '/table_Fixed_Header/vendor/bootstrap/js/popper.js' %}"></script>
-    <script src="{% static '/table_Fixed_Header/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
-    <!--===============================================================================================-->
-    <script src="{% static '/table_Fixed_Header/vendor/select2/select2.min.js' %}"></script>
-    <!--===============================================================================================-->
-    <script src="{% static '/table_Fixed_Header/vendor/perfect-scrollbar/perfect-scrollbar.min.js' %}">
-    </script>
-    <script>
-        $('.js-pscroll').each(function () {
-            var ps = new PerfectScrollbar(this);
-
-            $(window).on('resize', function () {
-                ps.update();
-            })
-        });
-    </script>
-    <!--===============================================================================================-->
-    <script src="{% static '/table_fixed_Header/js/main.js' %}"></script>
     {% endblock %}

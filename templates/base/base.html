@@ -45,10 +45,10 @@
       </a>
       <nav id="navbar" class="navbar">
         <ul>
-            {% if user.is_authenticated %}
+          {% if user.is_authenticated %}
           <li><a class="nav-link scrollto active" href="{% url 'index' %}">Inicio</a></li>
           <li><a class="nav-link scrollto" href="/#subsidios">Subsidios</a></li>
-          <li><a class="nav-link scrollto" href="{% url 'agregar' %}">Agregar</a></li>
+         
           <li class="dropdown"><a href="#"><span>Catalogos</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a href="{% url 'municipios' %}">Municipios</a></li>
@@ -56,11 +56,21 @@
               <li><a href="{% url 'zonas' %}">Zonas</a></li>
             </ul>
           </li>
-          {% endif %}
-          {% if user.is_authenticated %}
+           <li><a class="nav-link scrollto" href="{% url 'agregar' %}">Agregar</a></li>
           <li><a class="text">¡Bienvenido {{user.username | title}}!</a></li>
           <li><a class="nav-link scrollto active" href="{% url 'logout' %}">Salir</a></li>
           {% else %}
+          <li><a class="nav-link scrollto active" href="{% url 'index' %}">Inicio</a></li>
+          <li><a class="nav-link scrollto" href="/#subsidios">Subsidios</a></li>
+         
+          <li class="dropdown"><a href="#"><span>Catalogos</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="{% url 'municipios' %}">Municipios</a></li>
+              <li><a href="{% url 'departamentos' %}">Departamentos</a></li>
+              <li><a href="{% url 'zonas' %}">Zonas</a></li>
+            </ul>
+          </li>
+           <li><a class="nav-link scrollto" href="{% url 'agregar' %}">Agregar</a></li>
           <li><a class="nav-link scrollto active" href="{% url 'login' %}">Ingresar</a></>
           <li><a class="nav-link scrollto active" href="{% url 'registro' %}">Registrarse</a></li>
           {% endif %}

@@ -3,15 +3,31 @@
 {% block titulo %}
 Agregar beneficio
 {% endblock %}
+{% block css %}
+<!-- Icons font CSS-->
+<link href="{% static '/agregar/vendor/mdi-font/css/material-design-iconic-font.min.css' %}" rel="stylesheet"
+  media="all">
+<link href="{% static '/agregar/vendor/font-awesome-4.7/css/font-awesome.min.css' %}" rel="stylesheet" media="all">
+<!-- Font special for pages-->
+<link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i"
+  rel="stylesheet">
+
+<!-- Vendor CSS-->
+<link href="{% static '/agregar/vendor/select2/select2.min.css' %}" rel="stylesheet" media="all">
+<link href="{% static '/agregar/vendor/datepicker/daterangepicker.css' %}" rel="stylesheet" media="all">
+
+<!-- Main CSS-->
+<link href="{% static '/agregar/css/main.css' %}" rel="stylesheet" media="all">
+{% endblock %}
+
 {% block contenido %}
-
-
 <br><br><br><br>
-<div class="row">
-  <div class="col-12 col-md-6 offset-md-3">
-    <div class="card">
-      <div classs="card-body">
-        <h2 class="card-title">Nuevo Beneficio</h2>
+<div class="page-wrapper bg-red p-t-180 p-b-100 font-robo">
+  <div class="wrapper wrapper--w960">
+    <div class="card card-2">
+      <div class="card-heading"></div>
+      <div class="card-body">
+        <h2 class="title">NUEVO BENEFICIO</h2>
         <form method="POST">
           {% csrf_token %}
           <div class="form-group">
@@ -31,8 +47,8 @@ Agregar beneficio
               <div class="input-group-prepend">
                 <span class="input-group-text">$</span>
               </div>
-              <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="Cantidad"
-                name="cantidad" value="{{cantidad}}">
+              <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="Cantidad (valores numéricos)"
+                name="cantidad" min="1" pattern="^[0-9]+" value="{{cantidad}}">
             </div>
             <br><br>
             <div class="d-flex justify-content-end">
@@ -50,5 +66,4 @@ Agregar beneficio
       </div>
     </div>
   </div>
-</div>
-{% endblock %}
+  {% endblock %}

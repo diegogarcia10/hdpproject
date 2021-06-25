@@ -14,7 +14,7 @@ def login(request):
 		    user = authenticate(request, username=username, password=password)
 		    if user is not None:
 		        lg(request, user)
-		        return redirect('index')	        
+		        return redirect('agregar')	        
 		    else:
 		    	err = "Error al ingresar credenciales, Asegurese de que el usuario y contraseña esten escritas correctamente"
 		    	return render(request, 'auth/login.html',{'err':err,'username':username})
