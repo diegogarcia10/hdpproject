@@ -52,7 +52,12 @@ def agregar(request):
 def municipios(request):
     from django.db import connection
     with connection.cursor() as cursor:
-        cursor.execute("SELECT SUM(subsidio_beneficiariotiposubsidio.cantidad),subsidio_tiposubsidio.nombre_tipo_subsidio, subsidio_municipio.nombre_municipio FROM subsidio_beneficiariotiposubsidio INNER JOIN subsidio_tiposubsidio ON subsidio_tiposubsidio.id=subsidio_beneficiariotiposubsidio.codigo_subsidio_id INNER JOIN subsidio_beneficiario ON subsidio_beneficiario.id=subsidio_beneficiariotiposubsidio.codigo_beneficiario_id INNER JOIN subsidio_municipio ON subsidio_municipio.id=subsidio_beneficiario.codigo_municipio_id GROUP BY subsidio_tiposubsidio.nombre_tipo_subsidio, subsidio_municipio.nombre_municipio")
+        cursor.execute("""SELECT SUM(subsidio_beneficiariotiposubsidio.cantidad),subsidio_tiposubsidio.nombre_tipo_subsidio, subsidio_municipio.nombre_municipio 
+                       FROM subsidio_beneficiariotiposubsidio 
+                       INNER JOIN subsidio_tiposubsidio ON subsidio_tiposubsidio.id=subsidio_beneficiariotiposubsidio.codigo_subsidio_id 
+                       INNER JOIN subsidio_beneficiario ON subsidio_beneficiario.id=subsidio_beneficiariotiposubsidio.codigo_beneficiario_id 
+                       INNER JOIN subsidio_municipio ON subsidio_municipio.id=subsidio_beneficiario.codigo_municipio_id 
+                       GROUP BY subsidio_municipio.nombre_municipio, subsidio_tiposubsidio.nombre_tipo_subsidio""")
         rawData = cursor.fetchall()
         result = []
         for r in rawData:
