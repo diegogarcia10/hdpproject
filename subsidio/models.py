@@ -29,8 +29,8 @@ class Municipio (models.Model):
 class Beneficiario (models.Model):
     codigo_municipio = models.ForeignKey(Municipio,  on_delete=models.PROTECT)
     codigo_usuario = models.ForeignKey(User, on_delete=models.PROTECT)
-    DUI = models.CharField(max_length=9, blank=False, null=False, unique=True)
-    NIT = models.CharField(max_length=20,blank=True, null=True, unique=True)        
+    DUI = models.CharField(max_length=20, blank=False, null=False)
+    NIT = models.CharField(max_length=20,blank=True, null=True)        
     def __str__(self):
         return '{}'.format(self.codigo_usuario.first_name)
 

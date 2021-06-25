@@ -81,17 +81,18 @@ def departamentos(request):
 def zonas(request):
     from django.db import connection
     with connection.cursor() as cursor:
-        cursor.execute("""SELECT SUM(subsidio_beneficiariotiposubsidio.cantidad), subsidio_tiposubsidio.nombre_tipo_subsidio, subsidio_zona.nombre_zona 
+        cursor.execute("""SELECT SUM(subsidio_beneficiariotiposubsidio.cantidad), subsidio_tiposubsidio.nombre_tipo_subsidio, subsidio_zona.nombre_zona,  subsidio_departamento.nombre_departamento 
                        FROM subsidio_beneficiariotiposubsidio 
                        INNER JOIN subsidio_tiposubsidio ON subsidio_tiposubsidio.id=subsidio_beneficiariotiposubsidio.codigo_subsidio_id  
                        INNER JOIN subsidio_beneficiario ON subsidio_beneficiario.id=subsidio_beneficiariotiposubsidio.codigo_beneficiario_id 
-                       INNER JOIN subsidio_zona ON subsidio_zona.id=subsidio_beneficiariotiposubsidio.codigo_beneficiario_id 
+                       INNER JOIN subsidio_departamento ON subsidio_departamento.id=subsidio_beneficiario.codigo_municipio_id
+                       INNER JOIN subsidio_zona ON subsidio_zona.id=subsidio_departamento.id
                        GROUP BY subsidio_zona.nombre_zona, subsidio_tiposubsidio.nombre_tipo_subsidio""")
         rawData = cursor.fetchall()
         result = []
         for r in rawData:
             result.append(list(r))
-            contexto={'zonas': result }
+            contexto={'zonas': result}
             print(contexto)
     return render(request,'subsidio/consulta_zonas.html',contexto)
 
