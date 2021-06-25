@@ -123,20 +123,7 @@
   <!-- Template Main JS File -->
   <script src="{% static 'assets/js/main.js' %}"></script>
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script>
 
-  </script>
-  {% if messages %}
-  {% for m in message %}
-  <script>
-    swal.fire({
-      "title": "!!!",
-      "text": "{{m}}",
-      "icon": "sucess"
-    });
-  </script>
-  {% endfor %}
-  {% endif %}
 
   {% block js %}
   {% endblock %}

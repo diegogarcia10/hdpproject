@@ -47,8 +47,11 @@ Agregar beneficio
               <div class="input-group-prepend">
                 <span class="input-group-text">$</span>
               </div>
-              <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="Cantidad (valores numéricos)"
-                name="cantidad" min="1" pattern="^[0-9]+" value="{{cantidad}}">
+              <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="Cantidad (valores numéricos sin comas)"
+                name="cantidad" step="0.01" min="1"  list="defaultNumbers" value="{{cantidad}}">
+                <datalist id="defaultNumbers">
+                  <option value="300.00">
+                </datalist>
             </div>
             <br><br>
             <div class="d-flex justify-content-end">
@@ -67,3 +70,17 @@ Agregar beneficio
     </div>
   </div>
   {% endblock %}
+{% block js %}
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  {% if messages %}
+  {% for m in messages %}
+  <script>
+    swal.fire({
+      "title": "Acción realizada",
+      "text": "{{m}}",
+      "icon": "sucess"
+    });
+  </script>
+  {% endfor %}
+  {% endif %}
+{% endblock %}

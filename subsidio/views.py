@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from django.db.models import Sum
+from django.contrib import messages
 from .models import *
 # Create your views here.
 def index(request):
@@ -39,7 +39,9 @@ def agregar(request):
         modelo_beneficio.codigo_beneficiario=beneficiario_logueado
         
         modelo_beneficio.cantidad = cantidad
+        
         modelo_beneficio.save()
+        messages.success(request, "Beneficio agregado correctamente")
     
 
     subsidios=TipoSubsidio.objects.all()
@@ -62,7 +64,12 @@ def municipios(request):
 def departamentos(request):
     from django.db import connection
     with connection.cursor() as cursor:
-        cursor.execute("SELECT SUM(subsidio_beneficiariotiposubsidio.cantidad), subsidio_tiposubsidio.nombre_tipo_subsidio, subsidio_departamento.nombre_departamento  FROM subsidio_beneficiariotiposubsidio INNER JOIN subsidio_tiposubsidio ON subsidio_tiposubsidio.id=subsidio_beneficiariotiposubsidio.codigo_subsidio_id INNER JOIN subsidio_beneficiario ON subsidio_beneficiario.id=subsidio_beneficiariotiposubsidio.codigo_beneficiario_id INNER JOIN subsidio_departamento ON subsidio_departamento.id=subsidio_beneficiario.codigo_municipio_id GROUP BY subsidio_tiposubsidio.nombre_tipo_subsidio, subsidio_departamento.nombre_departamento")
+        cursor.execute("""SELECT SUM(subsidio_beneficiariotiposubsidio.cantidad), subsidio_tiposubsidio.nombre_tipo_subsidio, subsidio_departamento.nombre_departamento  
+                       FROM subsidio_beneficiariotiposubsidio 
+                       INNER JOIN subsidio_tiposubsidio ON subsidio_tiposubsidio.id=subsidio_beneficiariotiposubsidio.codigo_subsidio_id 
+                       INNER JOIN subsidio_beneficiario ON subsidio_beneficiario.id=subsidio_beneficiariotiposubsidio.codigo_beneficiario_id 
+                       INNER JOIN subsidio_departamento ON subsidio_departamento.id=subsidio_beneficiario.codigo_municipio_id 
+                       GROUP BY subsidio_departamento.nombre_departamento, subsidio_tiposubsidio.nombre_tipo_subsidio""")
         rawData = cursor.fetchall()
         result = []
         for r in rawData:
@@ -74,7 +81,12 @@ def departamentos(request):
 def zonas(request):
     from django.db import connection
     with connection.cursor() as cursor:
-        cursor.execute("SELECT SUM(subsidio_beneficiariotiposubsidio.cantidad), subsidio_tiposubsidio.nombre_tipo_subsidio, subsidio_zona.nombre_zona FROM subsidio_beneficiariotiposubsidio INNER JOIN subsidio_tiposubsidio ON subsidio_tiposubsidio.id=subsidio_beneficiariotiposubsidio.codigo_subsidio_id  INNER JOIN subsidio_beneficiario ON subsidio_beneficiario.id=subsidio_beneficiariotiposubsidio.codigo_beneficiario_id INNER JOIN subsidio_zona ON subsidio_zona.id=subsidio_beneficiariotiposubsidio.codigo_beneficiario_id GROUP BY subsidio_zona.nombre_zona, subsidio_tiposubsidio.nombre_tipo_subsidio")
+        cursor.execute("""SELECT SUM(subsidio_beneficiariotiposubsidio.cantidad), subsidio_tiposubsidio.nombre_tipo_subsidio, subsidio_zona.nombre_zona 
+                       FROM subsidio_beneficiariotiposubsidio 
+                       INNER JOIN subsidio_tiposubsidio ON subsidio_tiposubsidio.id=subsidio_beneficiariotiposubsidio.codigo_subsidio_id  
+                       INNER JOIN subsidio_beneficiario ON subsidio_beneficiario.id=subsidio_beneficiariotiposubsidio.codigo_beneficiario_id 
+                       INNER JOIN subsidio_zona ON subsidio_zona.id=subsidio_beneficiariotiposubsidio.codigo_beneficiario_id 
+                       GROUP BY subsidio_zona.nombre_zona, subsidio_tiposubsidio.nombre_tipo_subsidio""")
         rawData = cursor.fetchall()
         result = []
         for r in rawData:

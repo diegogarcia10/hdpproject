@@ -27,8 +27,8 @@ Dinero otorgado a zonas
                             <thead>
                                 <tr class="row100 head">
                                     <th class="cell100 column1">Cantidad</th>
-                                    <th class="cell100 column2">Tipo de Susbidio</th>
-                                    <th class="cell100 column3">Departamento</th>
+                                    <th class="cell100 column1">Tipo de Susbidio</th>
+                                    <th class="cell100 column1">Departamento</th>
                                 </tr>
                             </thead>
                         </table>
@@ -40,7 +40,7 @@ Dinero otorgado a zonas
                                 {% for item in departamentos %}
                                 <tr class="row100 body">
                                     {% for i in item %}
-                                    <td class="cell100">
+                                    <td class="cell100 column1">
                                         {{i}}
                                     </td>
                                     {% endfor %}
@@ -53,7 +53,4 @@ Dinero otorgado a zonas
             </div>
         </div>
     </div>
-    {% endblock %}
-
-    {% block js %}
     {% endblock %}
