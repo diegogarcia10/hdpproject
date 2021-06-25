@@ -25,5 +25,7 @@ urlpatterns = [
     path('logout/',logout_v, name='logout'),
     path('registro/',registro,name="registro"),
     path('agregar/',agregar,name="agregar"),
-    path('consulta_municipios/',municipios,name="municipios")
+    path('consulta_municipios/',municipios,name="municipios"),
+    path('consulta_departamentos/',departamentos,name="departamentos"),
+    path('consulta_zonas/',zonas,name="zonas")
 ]
