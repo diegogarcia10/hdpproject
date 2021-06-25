@@ -1,0 +1,30 @@
+SELECT COUNT(b_ts.codigo_beneficiario), ts.nombre_tipo_subsidio, m.nombre_ municipio, 
+FROM Beneficiario_tipoSubsidio AS b_ts
+INNER JOIN TipoSubsidio AS ts ON ts.codigo_subsidio= b_ts.codigo_subsidio
+INNER JOIN Beneficiario AS b ON b.codigo_beneficiario= b_ts.codigo_beneficiario
+INNER JOIN Municipio AS m ON m.codigo_municipio=b. codigo_municipio;
+
+
+
+
+SELECT COUNT(b_ts.codigo_beneficiario_id) AS c, ts.nombre_tipo_subsidio, m.nombre_municipio 
+FROM subsidio_beneficiariotiposubsidio AS b_ts
+INNER JOIN subsidio_tiposubsidio AS ts ON ts.nombre_tipo_subsidio=b_ts.codigo_subsidio_id
+INNER JOIN subsidio_beneficiario AS b ON b.codigo_usuario_id=b_ts.codigo_beneficiario_id
+INNER JOIN subsidio_municipio AS m ON m.nombre_municipio=b.codigo_municipio_id
+
+
+
+
+SELECT SUM(b_ts.cantidad) AS total, ts.nombre_tipo_subsidio, m.nombre_municipio 
+FROM subsidio_beneficiariotiposubsidio AS b_ts
+INNER JOIN subsidio_tiposubsidio AS ts ON ts.id=b_ts.codigo_subsidio_id 
+INNER JOIN subsidio_beneficiario AS b ON b.codigo_usuario_id=b_ts.codigo_beneficiario_id 
+INNER JOIN subsidio_municipio AS m ON m.id=b.codigo_municipio_id ORDER BY ts.nombre_tipo_subsidio
+
+
+SELECT SUM(subsidio_beneficiariotiposubsidio.cantidad),subsidio_tiposubsidio.nombre_tipo_subsidio, subsidio_municipio.nombre_municipio FROM subsidio_beneficiariotiposubsidio
+INNER JOIN subsidio_tiposubsidio ON subsidio_tiposubsidio.id=subsidio_beneficiariotiposubsidio.codigo_subsidio_id
+INNER JOIN subsidio_beneficiario ON subsidio_beneficiario.id=subsidio_beneficiariotiposubsidio.codigo_beneficiario_id
+INNER JOIN subsidio_municipio ON subsidio_municipio.id=subsidio_beneficiario.codigo_municipio_id
+GROUP BY subsidio_tiposubsidio.nombre_tipo_subsidio, subsidio_municipio.nombre_municipio
