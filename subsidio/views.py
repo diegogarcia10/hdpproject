@@ -72,8 +72,9 @@ def departamentos(request):
         cursor.execute("""SELECT SUM(subsidio_beneficiariotiposubsidio.cantidad), subsidio_tiposubsidio.nombre_tipo_subsidio, subsidio_departamento.nombre_departamento  
                        FROM subsidio_beneficiariotiposubsidio 
                        INNER JOIN subsidio_tiposubsidio ON subsidio_tiposubsidio.id=subsidio_beneficiariotiposubsidio.codigo_subsidio_id 
-                       INNER JOIN subsidio_beneficiario ON subsidio_beneficiario.id=subsidio_beneficiariotiposubsidio.codigo_beneficiario_id 
-                       INNER JOIN subsidio_departamento ON subsidio_departamento.id=subsidio_beneficiario.codigo_municipio_id 
+                       INNER JOIN subsidio_beneficiario ON subsidio_beneficiario.id=subsidio_beneficiariotiposubsidio.codigo_beneficiario_id
+                       INNER JOIN subsidio_municipio ON subsidio_municipio.id=subsidio_beneficiario.codigo_municipio_id
+                       INNER JOIN subsidio_departamento ON subsidio_departamento.id=subsidio_municipio.codigo_departamento_id
                        GROUP BY subsidio_departamento.nombre_departamento, subsidio_tiposubsidio.nombre_tipo_subsidio""")
         rawData = cursor.fetchall()
         result = []
@@ -86,11 +87,12 @@ def departamentos(request):
 def zonas(request):
     from django.db import connection
     with connection.cursor() as cursor:
-        cursor.execute("""SELECT SUM(subsidio_beneficiariotiposubsidio.cantidad), subsidio_tiposubsidio.nombre_tipo_subsidio, subsidio_zona.nombre_zona,  subsidio_departamento.nombre_departamento 
+        cursor.execute("""SELECT SUM(subsidio_beneficiariotiposubsidio.cantidad), subsidio_tiposubsidio.nombre_tipo_subsidio, subsidio_zona.nombre_zona
                        FROM subsidio_beneficiariotiposubsidio 
                        INNER JOIN subsidio_tiposubsidio ON subsidio_tiposubsidio.id=subsidio_beneficiariotiposubsidio.codigo_subsidio_id  
-                       INNER JOIN subsidio_beneficiario ON subsidio_beneficiario.id=subsidio_beneficiariotiposubsidio.codigo_beneficiario_id 
-                       INNER JOIN subsidio_departamento ON subsidio_departamento.id=subsidio_beneficiario.codigo_municipio_id
+                       INNER JOIN subsidio_beneficiario ON subsidio_beneficiario.id=subsidio_beneficiariotiposubsidio.codigo_beneficiario_id
+                       INNER JOIN subsidio_municipio ON subsidio_municipio.id=subsidio_beneficiario.codigo_municipio_id
+                       INNER JOIN subsidio_departamento ON subsidio_departamento.id=subsidio_municipio.codigo_departamento_id
                        INNER JOIN subsidio_zona ON subsidio_zona.id=subsidio_departamento.id
                        GROUP BY subsidio_zona.nombre_zona, subsidio_tiposubsidio.nombre_tipo_subsidio""")
         rawData = cursor.fetchall()
