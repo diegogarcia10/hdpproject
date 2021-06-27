@@ -38,7 +38,7 @@
                                 </div>
                                 <br>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Usuario *" name="username" requerided 
+                                    <input type="text" class="form-control" placeholder="Usuario *" name="username" requerided pattern="[a-z0-9ü][a-z0-9ü_]{4,50}$"
                                         value="{{username}}" />
                                 </div>
                                 <div class="form-group">
@@ -98,7 +98,7 @@
             </form>
             {% if err %}
             <div class="alert alert-warning" role="alert">
-                {{err}}
+               {{err}}
             </div>
             {% endif %}
         </div>
