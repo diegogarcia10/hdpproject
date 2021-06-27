@@ -66,6 +66,8 @@ def registro(request):
 			err="Las contraseñas no coinciden"
 			contexto['err']=err
 			return render(request,'auth/registro.html',contexto)
+
+		
 		modelo_usuario=User()
 		modelo_usuario.first_name=nombre
 		modelo_usuario.last_name=apellido
