@@ -93,7 +93,7 @@ def zonas(request):
                        INNER JOIN subsidio_beneficiario ON subsidio_beneficiario.id=subsidio_beneficiariotiposubsidio.codigo_beneficiario_id
                        INNER JOIN subsidio_municipio ON subsidio_municipio.id=subsidio_beneficiario.codigo_municipio_id
                        INNER JOIN subsidio_departamento ON subsidio_departamento.id=subsidio_municipio.codigo_departamento_id
-                       INNER JOIN subsidio_zona ON subsidio_zona.id=subsidio_departamento.id
+                       INNER JOIN subsidio_zona ON subsidio_zona.id=subsidio_departamento.codigo_zona_id
                        GROUP BY subsidio_zona.nombre_zona, subsidio_tiposubsidio.nombre_tipo_subsidio""")
         rawData = cursor.fetchall()
         result = []

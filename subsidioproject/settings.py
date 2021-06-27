@@ -83,7 +83,7 @@ WSGI_APPLICATION = 'subsidioproject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'sc192',
+        'NAME': 'sc19',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': 'localhost',

@@ -42,11 +42,11 @@
                                         value="{{username}}" />
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Nombre *" name="first_name" requerided pattern="[a-zA-Z]{2,50}"
+                                    <input type="text" class="form-control" placeholder="Nombre *" name="first_name" requerided pattern="[a-zA-Z][a-z Ññáéíóúü]{4,50}"
                                         value="{{first_name}}" />
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Apellido*" name="last_name" required pattern="[a-zA-Z]{2,50}"
+                                    <input type="text" class="form-control" placeholder="Apellido*" name="last_name" required pattern="[a-zA-Z][a-z Ññáéíóúü]{4,50}"
                                         value="{{last_name}}" />
                                 </div>
                                 <div class="form-group">
@@ -91,6 +91,8 @@
                                         placeholder="Confirme contraseña *" value="{{password2}}" />
                                 </div>
                                 <button type="submit" class="btnRegister">Registrarse</button>
+                                <br>
+                                <input class="btn btn-secondary" type="reset" value="Reset">
                             </div>
                         </div>
                     </div>
