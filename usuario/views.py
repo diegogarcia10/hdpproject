@@ -67,7 +67,12 @@ def registro(request):
 			contexto['err']=err
 			return render(request,'auth/registro.html',contexto)
 
-		
+		#validando que se nombre de usuario no exista en la BD
+		if(User.objects.filter(username=username).exists()):
+			err="Ya Existe un usuario con ese nombre, ingrese otro por favor"
+			contexto['err']=err
+			return render(request,'auth/registro.html',contexto)
+			
 		modelo_usuario=User()
 		modelo_usuario.first_name=nombre
 		modelo_usuario.last_name=apellido
