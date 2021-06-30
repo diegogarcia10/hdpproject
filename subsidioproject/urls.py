@@ -20,7 +20,7 @@ from usuario.views import *
 from subsidio.views import *
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls,name='admin'),
     path('',include('subsidio.urls')),
     path('accounts/login/',login, name="login"),
     path('logout/',logout_v, name='logout'),

@@ -1,26 +1,31 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,reverse
 from django.contrib.auth import authenticate,logout, login as lg
 from subsidio.models import *
 from django.contrib.auth.models import User
+from django.http import HttpResponseRedirect
+
 # Create your views here.
 def login(request):
 	if request.user.is_authenticated:
 		return redirect('index')
 	else:
-		err = ""	
-		if request.method == 'POST':
-		    username = request.POST.get('username',False)
-		    password = request.POST.get('password',False)	    
-		    user = authenticate(request, username=username, password=password)
-		    if user is not None:
-		        lg(request, user)
-		        return redirect('agregar')	        
-		    else:
-		    	err = "Error al ingresar credenciales, Asegurese de que el usuario y contraseña esten escritas correctamente"
-		    	return render(request, 'auth/login.html',{'err':err,'username':username})
+		err=""
+		if request.method=='POST':
+			username=request.POST.get('username',False)
+			password=request.POST.get('password',False)
+			user=authenticate(request,username=username,password=password)
+			if user is not None:
+				lg(request,user)
+				if(user.is_superuser):
+					return HttpResponseRedirect(reverse('admin:index'))
+				return redirect('agregar')
+			else:
+				err="Error al ingresar las credenciales, asegurese  que el usuario y contraseña esten correctamente escritos"
+				return render(request,'auth/login.html',{'err':err,'username':username})
 		else:
-			return render(request, 'auth/login.html')
+			return render(request,'auth/login.html')
 	
+
 
 def logout_v(request):
     logout(request)
