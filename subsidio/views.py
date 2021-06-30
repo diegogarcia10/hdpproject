@@ -3,6 +3,9 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.contrib import messages
 from .models import *
+from django.http import HttpResponse,JsonResponse
+from django.core import serializers
+import json
 # Create your views here.
 def index(request):
     return render(request,'subsidio/index.html')
@@ -87,7 +90,7 @@ def departamentos(request):
 def zonas(request):
     from django.db import connection
     with connection.cursor() as cursor:
-        cursor.execute("""SELECT SUM(subsidio_beneficiariotiposubsidio.cantidad), subsidio_tiposubsidio.nombre_tipo_subsidio, subsidio_zona.nombre_zona
+        cursor.execute("""SELECT subsidio_zona.nombre_zona, subsidio_tiposubsidio.nombre_tipo_subsidio, TRUNCATE(SUM(subsidio_beneficiariotiposubsidio.cantidad),2) 
                        FROM subsidio_beneficiariotiposubsidio 
                        INNER JOIN subsidio_tiposubsidio ON subsidio_tiposubsidio.id=subsidio_beneficiariotiposubsidio.codigo_subsidio_id  
                        INNER JOIN subsidio_beneficiario ON subsidio_beneficiario.id=subsidio_beneficiariotiposubsidio.codigo_beneficiario_id
@@ -95,11 +98,28 @@ def zonas(request):
                        INNER JOIN subsidio_departamento ON subsidio_departamento.id=subsidio_municipio.codigo_departamento_id
                        INNER JOIN subsidio_zona ON subsidio_zona.id=subsidio_departamento.codigo_zona_id
                        GROUP BY subsidio_zona.nombre_zona, subsidio_tiposubsidio.nombre_tipo_subsidio""")
-        rawData = cursor.fetchall()
+        rawData = cursor.fetchall()        
         result = []
         for r in rawData:
             result.append(list(r))
             contexto={'zonas': result}
             print(contexto)
+    zonas2=Zona.objects.raw('select subsidio_zona.*, sum(subsidio_beneficiariotiposubsidio.cantidad) as cantidad from subsidio_zona inner join subsidio_departamento on subsidio_zona.id=subsidio_departamento.codigo_zona_id inner JOIN subsidio_municipio on subsidio_departamento.id=subsidio_municipio.codigo_departamento_id inner join subsidio_beneficiario on subsidio_municipio.id=subsidio_beneficiario.codigo_municipio_id inner join subsidio_beneficiariotiposubsidio on subsidio_beneficiario.id=subsidio_beneficiariotiposubsidio.codigo_beneficiario_id GROUP BY subsidio_zona.nombre_zona;')
+    labels = []
+    data = []
+    for x in zonas2:
+        labels.append(x.nombre_zona)
+        data.append(str(x.cantidad))
+    contexto['labels']=labels
+    contexto['data']=data    
     return render(request,'subsidio/consulta_zonas.html',contexto)
 
+def suma_zonas(request):
+    zonas2=Zona.objects.raw('select subsidio_zona.nombre_zona, sum(subsidio_beneficiariotiposubsidio.cantidad) as cantidad from subsidio_zona inner join subsidio_departamento on subsidio_zona.id=subsidio_departamento.codigo_zona_id inner JOIN subsidio_municipio on subsidio_departamento.id=subsidio_municipio.codigo_departamento_id inner join subsidio_beneficiario on subsidio_municipio.id=subsidio_beneficiario.codigo_municipio_id inner join subsidio_beneficiariotiposubsidio on subsidio_beneficiario.id=subsidio_beneficiariotiposubsidio.codigo_beneficiario_id GROUP BY subsidio_zona.nombre_zona;')
+    labels = []
+    data = []
+    for x in zonas2:
+        labels.append(x.nombre_zona)
+        data.append(x.cantidad)   
+        
+    

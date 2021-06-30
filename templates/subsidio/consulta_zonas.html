@@ -16,19 +16,31 @@ Dinero otorgado a zonas
 {% endblock %}
 
 {% block contenido %}
-<div class="limiter">
+<div class="limiter">  
     <br><br>
     <div class="container-table100">
         <div class="wrap-table100">
+            <div class="row text-center">
+                <div class="col-md-3">
+        
+                </div>
+                <div class="col-md-6">
+                    <canvas id="myChart" width="100" height="70"></canvas>
+                </div>
+                <div class="col-md-3">
+        
+                </div>
+            </div>
+            <br><br>
             <div class="table100 ver1 m-b-110">
                 <div class="table-responsive">
                     <div class="table100-head">
                         <table>
                             <thead>
-                                <tr class="row100 head">
-                                    <th class="cell100 column1">Cantidad</th>
+                                <tr class="row100 head text-center">
+                                    <th class="cell100 column1">Zona</th>
                                     <th class="cell100 column2">Tipo de Susbidio</th>
-                                    <th class="cell100 column3">Zona</th>
+                                    <th class="cell100 column3">Cantidad</th>
                                 </tr>
                             </thead>
                         </table>
@@ -38,9 +50,9 @@ Dinero otorgado a zonas
                         <table>
                             <tbody>
                                 {% for item in zonas %}
-                                <tr class="row100 body">
+                                <tr class="row100 body text-center">
                                     {% for i in item %}
-                                    <td class="cell100">
+                                    <td class="cell100 ">
                                         {{i}}
                                     </td>
                                     {% endfor %}
@@ -51,7 +63,47 @@ Dinero otorgado a zonas
                     </div>
                 </div>
             </div>
-            <input type = "button" value = "Regresar" onclick = "history.back ()">
+            <input type = "button" class="btn btn-info" value = "Regresar" onclick = "history.back ()">
         </div>
     </div>
     {% endblock %}
+{% block js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.4.0/chart.min.js" 
+integrity="sha512-JxJpoAvmomz0MbIgw9mx+zZJLEvC6hIgQ6NcpFhVmbK1Uh5WynnRTTSGv3BTZMNBpPbocmdSJfldgV5lVnPtIw==" 
+crossorigin="anonymous" 
+referrerpolicy="no-referrer">
+</script>
+<script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: {{ labels |safe }},
+            datasets: [{
+                label: 'Cantidad de Subsidio',
+                data: {{ data|safe }},
+                backgroundColor: [
+                    'rgba(255, 99, 152, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)'                    
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)'
+                    
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+    </script>
+{% endblock %}
