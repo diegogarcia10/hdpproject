@@ -80,19 +80,10 @@ referrerpolicy="no-referrer">
         data: {
             labels: {{ labels |safe }},
             datasets: [{
-                label: 'Cantidad de Subsidio',
+                label: 'Subsidio por Zona y tipo subsidio',
                 data: {{ data|safe }},
-                backgroundColor: [
-                    'rgba(255, 99, 152, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)'                    
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)'
-                    
-                ],
+                backgroundColor: {{ coloresbackground|safe }},
+                borderColor: {{ coloresborder|safe }},
                 borderWidth: 1
             }]
         },

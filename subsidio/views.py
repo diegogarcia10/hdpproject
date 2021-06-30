@@ -6,6 +6,7 @@ from .models import *
 from django.http import HttpResponse,JsonResponse
 from django.core import serializers
 import json
+import random
 # Create your views here.
 def index(request):
     return render(request,'subsidio/index.html')
@@ -55,7 +56,7 @@ def agregar(request):
 def municipios(request):
     from django.db import connection
     with connection.cursor() as cursor:
-        cursor.execute("""SELECT SUM(subsidio_beneficiariotiposubsidio.cantidad),subsidio_tiposubsidio.nombre_tipo_subsidio, subsidio_municipio.nombre_municipio 
+        cursor.execute("""SELECT   subsidio_municipio.nombre_municipio, subsidio_tiposubsidio.nombre_tipo_subsidio, TRUNCATE(SUM(subsidio_beneficiariotiposubsidio.cantidad),2)
                        FROM subsidio_beneficiariotiposubsidio 
                        INNER JOIN subsidio_tiposubsidio ON subsidio_tiposubsidio.id=subsidio_beneficiariotiposubsidio.codigo_subsidio_id 
                        INNER JOIN subsidio_beneficiario ON subsidio_beneficiario.id=subsidio_beneficiariotiposubsidio.codigo_beneficiario_id 
@@ -67,12 +68,33 @@ def municipios(request):
             result.append(list(r))
             contexto={'municipios': result }
             print(contexto)
+    municipios2=Municipio.objects.raw(""" select subsidio_municipio.id,subsidio_municipio.nombre_municipio,subsidio_tiposubsidio.nombre_tipo_subsidio ,sum(subsidio_beneficiariotiposubsidio.cantidad) as cantidad 
+                                            from subsidio_municipio 
+                                            inner join subsidio_beneficiario on subsidio_municipio.id=subsidio_beneficiario.codigo_municipio_id
+                                            inner join subsidio_beneficiariotiposubsidio on subsidio_beneficiario.id=subsidio_beneficiariotiposubsidio.codigo_beneficiario_id
+                                            inner join subsidio_tiposubsidio on subsidio_beneficiariotiposubsidio.codigo_subsidio_id=subsidio_tiposubsidio.id
+                                            GROUP BY subsidio_municipio.nombre_municipio,subsidio_tiposubsidio.nombre_tipo_subsidio;
+                                            """)
+    labels = []
+    data = []
+    coloresbackground=[]
+    coloresborder=[]
+    for x in municipios2:
+        labels.append(x.nombre_municipio+'-'+x.nombre_tipo_subsidio)
+        data.append(str(x.cantidad))       
+        coloresbackground.append('rgba('+str(random.randint(1, 255))+','+str(random.randint(1, 255))+', '+str(random.randint(1, 255))+', 0.2)')
+        coloresborder.append('rgba('+str(random.randint(1, 255))+','+str(random.randint(1, 255))+', '+str(random.randint(1, 255))+',1)')
+    
+    contexto['labels']=labels
+    contexto['data']=data
+    contexto['coloresbackground']=coloresbackground
+    contexto['coloresborder']=coloresborder
     return render(request,'subsidio/consulta_municipios.html',contexto)
 
 def departamentos(request):
     from django.db import connection
     with connection.cursor() as cursor:
-        cursor.execute("""SELECT SUM(subsidio_beneficiariotiposubsidio.cantidad), subsidio_tiposubsidio.nombre_tipo_subsidio, subsidio_departamento.nombre_departamento  
+        cursor.execute("""SELECT subsidio_departamento.nombre_departamento, subsidio_tiposubsidio.nombre_tipo_subsidio,TRUNCATE(SUM(subsidio_beneficiariotiposubsidio.cantidad),2)  
                        FROM subsidio_beneficiariotiposubsidio 
                        INNER JOIN subsidio_tiposubsidio ON subsidio_tiposubsidio.id=subsidio_beneficiariotiposubsidio.codigo_subsidio_id 
                        INNER JOIN subsidio_beneficiario ON subsidio_beneficiario.id=subsidio_beneficiariotiposubsidio.codigo_beneficiario_id
@@ -85,6 +107,27 @@ def departamentos(request):
             result.append(list(r))
             contexto={'departamentos': result }
             print(contexto)
+    departamentos2=Departamento.objects.raw("""select subsidio_departamento.id,subsidio_departamento.nombre_departamento ,subsidio_tiposubsidio.nombre_tipo_subsidio ,sum(subsidio_beneficiariotiposubsidio.cantidad) as cantidad 
+                                                from subsidio_departamento
+                                                inner JOIN subsidio_municipio on subsidio_departamento.id=subsidio_municipio.codigo_departamento_id 
+                                                inner join subsidio_beneficiario on subsidio_municipio.id=subsidio_beneficiario.codigo_municipio_id
+                                                inner join subsidio_beneficiariotiposubsidio on subsidio_beneficiario.id=subsidio_beneficiariotiposubsidio.codigo_beneficiario_id
+                                                inner join subsidio_tiposubsidio on subsidio_beneficiariotiposubsidio.codigo_subsidio_id=subsidio_tiposubsidio.id
+                                                GROUP BY subsidio_departamento.nombre_departamento,subsidio_tiposubsidio.nombre_tipo_subsidio; """)
+    labels = []
+    data = []
+    coloresbackground=[]
+    coloresborder=[]
+    for x in departamentos2:
+        labels.append(x.nombre_departamento+'-'+x.nombre_tipo_subsidio)
+        data.append(str(x.cantidad))
+        coloresbackground.append('rgba('+str(random.randint(1, 255))+','+str(random.randint(1, 255))+', '+str(random.randint(1, 255))+', 0.2)')
+        coloresborder.append('rgba('+str(random.randint(1, 255))+','+str(random.randint(1, 255))+', '+str(random.randint(1, 255))+',1)')
+        
+    contexto['labels']=labels
+    contexto['data']=data
+    contexto['coloresbackground']=coloresbackground
+    contexto['coloresborder']=coloresborder
     return render(request,'subsidio/consulta_departamentos.html',contexto)
 
 def zonas(request):
@@ -104,22 +147,30 @@ def zonas(request):
             result.append(list(r))
             contexto={'zonas': result}
             print(contexto)
-    zonas2=Zona.objects.raw('select subsidio_zona.*, sum(subsidio_beneficiariotiposubsidio.cantidad) as cantidad from subsidio_zona inner join subsidio_departamento on subsidio_zona.id=subsidio_departamento.codigo_zona_id inner JOIN subsidio_municipio on subsidio_departamento.id=subsidio_municipio.codigo_departamento_id inner join subsidio_beneficiario on subsidio_municipio.id=subsidio_beneficiario.codigo_municipio_id inner join subsidio_beneficiariotiposubsidio on subsidio_beneficiario.id=subsidio_beneficiariotiposubsidio.codigo_beneficiario_id GROUP BY subsidio_zona.nombre_zona;')
+    zonas2=Zona.objects.raw(""" select subsidio_zona.*, subsidio_tiposubsidio.nombre_tipo_subsidio,sum(subsidio_beneficiariotiposubsidio.cantidad) as cantidad 
+                                from subsidio_zona 
+                                inner join subsidio_departamento on subsidio_zona.id=subsidio_departamento.codigo_zona_id 
+                                inner JOIN subsidio_municipio on subsidio_departamento.id=subsidio_municipio.codigo_departamento_id 
+                                inner join subsidio_beneficiario on subsidio_municipio.id=subsidio_beneficiario.codigo_municipio_id 
+                                inner join subsidio_beneficiariotiposubsidio on subsidio_beneficiario.id=subsidio_beneficiariotiposubsidio.codigo_beneficiario_id 
+                                inner join subsidio_tiposubsidio on subsidio_beneficiariotiposubsidio.codigo_subsidio_id=subsidio_tiposubsidio.id 
+                                GROUP BY subsidio_zona.nombre_zona,subsidio_tiposubsidio.nombre_tipo_subsidio;""")
     labels = []
     data = []
+    coloresbackground=[]
+    coloresborder=[]
     for x in zonas2:
-        labels.append(x.nombre_zona)
-        data.append(str(x.cantidad))
+        labels.append(x.nombre_zona+'-'+x.nombre_tipo_subsidio)
+        data.append(str(x.cantidad))       
+        coloresbackground.append('rgba('+str(random.randint(1, 255))+','+str(random.randint(1, 255))+', '+str(random.randint(1, 255))+', 0.2)')
+        coloresborder.append('rgba('+str(random.randint(1, 255))+','+str(random.randint(1, 255))+', '+str(random.randint(1, 255))+',1)')
+    
     contexto['labels']=labels
-    contexto['data']=data    
+    contexto['data']=data
+    contexto['coloresbackground']=coloresbackground
+    contexto['coloresborder']=coloresborder
     return render(request,'subsidio/consulta_zonas.html',contexto)
 
-def suma_zonas(request):
-    zonas2=Zona.objects.raw('select subsidio_zona.nombre_zona, sum(subsidio_beneficiariotiposubsidio.cantidad) as cantidad from subsidio_zona inner join subsidio_departamento on subsidio_zona.id=subsidio_departamento.codigo_zona_id inner JOIN subsidio_municipio on subsidio_departamento.id=subsidio_municipio.codigo_departamento_id inner join subsidio_beneficiario on subsidio_municipio.id=subsidio_beneficiario.codigo_municipio_id inner join subsidio_beneficiariotiposubsidio on subsidio_beneficiario.id=subsidio_beneficiariotiposubsidio.codigo_beneficiario_id GROUP BY subsidio_zona.nombre_zona;')
-    labels = []
-    data = []
-    for x in zonas2:
-        labels.append(x.nombre_zona)
-        data.append(x.cantidad)   
+
         
     
