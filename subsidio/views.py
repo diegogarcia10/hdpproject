@@ -147,7 +147,7 @@ def zonas(request):
             result.append(list(r))
             contexto={'zonas': result}
             print(contexto)
-    zonas2=Zona.objects.raw(""" select subsidio_zona.*, subsidio_tiposubsidio.nombre_tipo_subsidio,sum(subsidio_beneficiariotiposubsidio.cantidad) as cantidad 
+    zonas2=Zona.objects.raw(""" select subsidio_zona.*, subsidio_tiposubsidio.nombre_tipo_subsidio, sum(subsidio_beneficiariotiposubsidio.cantidad) as cantidad 
                                 from subsidio_zona 
                                 inner join subsidio_departamento on subsidio_zona.id=subsidio_departamento.codigo_zona_id 
                                 inner JOIN subsidio_municipio on subsidio_departamento.id=subsidio_municipio.codigo_departamento_id 

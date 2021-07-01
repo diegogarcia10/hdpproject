@@ -6,7 +6,6 @@
 <link rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/css/bootstrap-select.min.css">
 
-
 {% endblock %}
 
 {% block titulo %} Registrarse {% endblock %}
@@ -42,14 +41,14 @@
                                         value="{{username}}" />
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Nombre *" name="first_name" requerided pattern="[a-zA-Z][a-z Ññáéíóúü]{4,50}"
+                                    <input type="text" class="form-control" placeholder="Nombre *" name="first_name" requerided pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,48}"
                                         value="{{first_name}}" />
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Apellido*" name="last_name" required pattern="[a-zA-Z][a-z Ññáéíóúü]{4,50}"
+                                    <input type="text" class="form-control" placeholder="Apellido*" name="last_name" required pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,48}"
                                         value="{{last_name}}" />
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" id="dui_display" style="display: show;">
                                     <input type="text" class="form-control" placeholder="DUI*" name="dui" id="dui"
                                         value="{{dui}}" />
                                 </div>
@@ -140,11 +139,12 @@
             if ($(this).prop("checked") == true) {
                 console.log("Checkbox is checked.");
                 $('#nit_display').show();
+                $('#dui_display').hide();
             } else if ($(this).prop("checked") == false) {
                 console.log("Checkbox is unchecked.");
                 $('#nit_display').hide();
+                $('#dui_display').show();
             }
-
         });
     });
 </script>
